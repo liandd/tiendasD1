@@ -1,0 +1,110 @@
+Building configuration...
+
+Current configuration : 1452 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+security passwords min-length 8
+!
+hostname RT-AV30AGOSTO
+!
+login block-for 300 attempts 3 within 30
+!
+!
+enable secret 5 $1$mERr$6W/96bmrWX4bLw8Au6KTE/
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username admin privilege 15 secret 5 $1$mERr$6W/96bmrWX4bLw8Au6KTE/
+username soporte secret 5 $1$mERr$6W/96bmrWX4bLw8Au6KTE/
+!
+!
+license udi pid CISCO2901/K9 sn FTX1524587B-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain-name www.D1SAS.com
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 220.15.180.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/3/0
+ ip address 8.0.2.2 255.0.0.0
+ clock rate 2000000
+!
+interface Serial0/3/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+ip route 0.0.0.0 0.0.0.0 Serial0/3/0 
+!
+ip flow-export version 9
+!
+!
+ip access-list extended sl_def_acl
+ deny tcp any any eq telnet
+ deny tcp any any eq www
+ deny tcp any any eq 22
+ permit tcp any any eq 22
+!
+banner motd ^C!!!SOLO PERSONAL AUTORIZADO // LEY 1273 DE 2009 COLOMBIA!!!^C
+!
+!
+!
+!
+line con 0
+ exec-timeout 2 0
+ logging synchronous
+ login local
+!
+line aux 0
+ exec-timeout 2 0
+ logging synchronous
+ login local
+!
+line vty 0 4
+ exec-timeout 2 0
+ logging synchronous
+ login local
+!
+!
+!
+end
